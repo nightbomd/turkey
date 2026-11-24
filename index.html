@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figgy Saves His Own Skin</title>
+
+    <style>
+        html, body {
+            overflow: hidden;
+            height: 100%;
+            margin: 0;
+            background:
+                radial-gradient(circle, #fff9 2px, transparent 3px)
+                    0 0 / 80px 80px,
+                radial-gradient(circle, #fff6 1px, transparent 2px)
+                    30px 40px / 55px 55px,
+                radial-gradient(
+                    ellipse at bottom,
+                    #e3f4ff,
+                    #739db8 45%,
+                    #17354d
+                );
+        }
+
+        .cartoon {
+            --brown1: #753;
+            --brown2: #975;
+            --orange1: orange;
+            --orange2: darkorange;
+            --red: #c51e36;
+            --green: #16834d;
+
+            width: 80vmin;
+            height: 80vmin;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: drop-shadow(1vmin 2vmin 1.5vmin #0004);
+        }
+
+        .cartoon div {
+            position: absolute;
+            box-sizing: border-box;
+        }
+
+        /* Snow beneath the turkey */
+
+        .cartoon::before {
+            content: "";
+            position: absolute;
+            width: 65%;
+            height: 12%;
+            bottom: -4%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+            background: radial-gradient(
+                ellipse at 50% 20%,
+                white,
+                #dcecf5 60%,
+                #b5cddd
+            );
+            box-shadow: 0 1vmin 3vmin #17354d33;
+        }
+
+        /* Body */
+
+        .body {
+            width: 40%;
+            height: 40%;
+            background: radial-gradient(
+                circle at 35% 25%,
+                #b98a59,
+                #775533 55%,
+                #422817
+            );
+            color: var(--brown1);
+            border-radius: 50%;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            box-shadow:
+                -4vmin 14.5vmin 0 -13vmin,
+                4vmin 14.5vmin 0 -13vmin,
+                inset 0 0.5vmin 1vmin #fff3,
+                inset -1vmin -2vmin 3vmin #0004;
+        }
+
+        /* Wings */
+
+        .wing {
+            height: 30%;
+            width: 20%;
+            background: linear-gradient(
+                135deg,
+                #c49a6c,
+                #997755 50%,
+                #604020
+            );
+            border-radius: 100% 0% 100% 5%;
+            top: 41%;
+            left: 23%;
+            transform-origin: top right;
+            transform: rotate(-10deg);
+            box-shadow:
+                0.5vmin 1vmin 1.5vmin #0003,
+                inset 0.5vmin 0.5vmin 1vmin #fff3,
+                inset -0.5vmin -1vmin 1vmin #0003;
+        }
+
+        .wing + .wing {
+            left: auto;
+            right: 43%;
+            transform: scaleX(-1) rotate(-10deg);
+        }
+
+        /* Head */
+
+        .head {
+            width: 19%;
+            height: 19%;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at 30% 25%,
+                #d6ac7e,
+                #997755 60%,
+                #654322
+            );
+            top: 15%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            clip-path: polygon(
+                0% 20%,
+                100% 20%,
+                100% 500%,
+                0% 500%
+            );
+        }
+
+        .head::before {
+            content: "";
+            position: absolute;
+            width: 40%;
+            height: 120%;
+            background: linear-gradient(
+                90deg,
+                #b99168,
+                #997755,
+                #654322
+            );
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            border-radius: 0 0 100% 100% / 30%;
+        }
+
+        /* Eyes */
+
+        .eye {
+            width: 10%;
+            height: 10%;
+            background: #16100b;
+            border-radius: 50%;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, 0)
+                       translate(-2.5vmin, 0);
+            box-shadow: 5vmin 0 #16100b;
+        }
+
+        .eye::after {
+            content: "";
+            position: absolute;
+            width: 35%;
+            height: 35%;
+            top: 15%;
+            left: 15%;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 5vmin 0 white;
+        }
+
+        /* Beak */
+
+        .beak {
+            width: 4vmin;
+            height: 3vmin;
+            border-left: 4vmin solid var(--orange1);
+            border-top: 1.5vmin solid transparent;
+            border-bottom: 1.5vmin solid transparent;
+            top: 60%;
+            left: 50%;
+            filter: drop-shadow(
+                0.2vmin 0.3vmin 0.2vmin #0005
+            );
+        }
+
+        /* Snood */
+
+        .red {
+            width: 2.5vmin;
+            height: 6vmin;
+            background: linear-gradient(
+                110deg,
+                #ff6262,
+                #dd0000 50%,
+                #800000
+            );
+            border-radius: 100% / 100% 0 100% 100%;
+            top: 60%;
+            left: 50%;
+            transform: translate(-100%, 0);
+            box-shadow: 0.3vmin 0.4vmin 0.5vmin #0003;
+        }
+
+        /* Legs */
+
+        .leg {
+            width: 3%;
+            height: 21%;
+            background: var(--orange1);
+            top: 79%;
+            left: 50%;
+            transform: translate(-50%, 0)
+                       translate(-4vmin, 0);
+            border-radius: 5vmin / 50%;
+
+            background-image:
+                repeating-linear-gradient(
+                    transparent 0 10%,
+                    #0002 10% 11%
+                ),
+                linear-gradient(
+                    90deg,
+                    #ffce66,
+                    orange,
+                    #b85c00
+                );
+
+            box-shadow: 0.3vmin 0.4vmin 0.5vmin #0003;
+        }
+
+        .leg + .leg {
+            transform: translate(-50%, 0)
+                       translate(4vmin, 0);
+        }
+
+        .leg::before,
+        .leg::after {
+            content: "";
+            position: absolute;
+            width: 80%;
+            height: 35%;
+            left: 50%;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                #ffc65c,
+                orange,
+                #b85c00
+            );
+            border-radius: 5vmin;
+            transform-origin: 50% 0;
+            transform: translate(-50%, 0) rotate(30deg);
+        }
+
+        .leg::after {
+            transform: translate(-50%, 0) rotate(-30deg);
+        }
+
+        /* Santa hat */
+
+        .hat-top {
+            width: 24%;
+            height: 24%;
+            top: -4%;
+            left: 50%;
+            background: radial-gradient(
+                ellipse at 30% 30%,
+                #ff7777,
+                #d71932 45%,
+                #79091b
+            );
+            border-radius: 90% 20% 15% 15%;
+            transform: translate(-50%, 0) rotate(-12deg);
+            box-shadow:
+                inset -1vmin -1vmin 2vmin #0003,
+                inset 0.5vmin 0.5vmin 1vmin #fff3,
+                0.5vmin 1vmin 1vmin #0003;
+            z-index: 5;
+        }
+
+        /* Santa hat pom-pom */
+
+        .hat-top::before {
+            content: "";
+            position: absolute;
+            width: 6vmin;
+            height: 6vmin;
+            top: -1vmin;
+            left: 95%;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at 30% 25%,
+                white,
+                #f1f1f1 50%,
+                #a9b9c4
+            );
+            box-shadow: 0.4vmin 0.5vmin 1vmin #0003;
+        }
+
+        /* White hat brim */
+
+        .hat-bottom {
+            width: 27%;
+            height: 7%;
+            top: 15%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            border-radius: 5vmin;
+            background: linear-gradient(
+                180deg,
+                white,
+                #f1f4f6 45%,
+                #aebdc8
+            );
+            box-shadow:
+                inset 0 0.5vmin 1vmin #fff,
+                0 0.6vmin 1vmin #0004;
+            z-index: 6;
+        }
+
+        /* Christmas scarf */
+
+        .scarf {
+            width: 15%;
+            height: 5%;
+            top: 38%;
+            left: 50%;
+            transform: translateX(-50%) rotate(-5deg);
+            border-radius: 2vmin;
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent 0 25%,
+                    #fffd 25% 40%,
+                    transparent 40% 50%
+                ),
+                linear-gradient(
+                    180deg,
+                    #e84242,
+                    #b91026,
+                    #760b1c
+                );
+            box-shadow:
+                inset 0 0.4vmin 0.5vmin #fff4,
+                0 0.5vmin 0.8vmin #0004;
+            z-index: 4;
+        }
+
+        .scarf::after {
+            content: "";
+            position: absolute;
+            width: 40%;
+            height: 300%;
+            top: 60%;
+            left: 65%;
+            transform: rotate(-15deg);
+            border-radius: 0 0 1vmin 1vmin;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent 0 20%,
+                    #fffd 20% 35%,
+                    transparent 35% 50%
+                ),
+                linear-gradient(
+                    90deg,
+                    #850d20,
+                    #e84242,
+                    #a51026
+                );
+            box-shadow: 0.5vmin 0.5vmin 1vmin #0003;
+        }
+
+        /* Christmas tail feathers */
+
+        .tail {
+            width: 10%;
+            height: 40%;
+            border-radius: 100% / 30% 30% 170% 170%;
+            transform-origin: 50% 100%;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, 0);
+
+            background-image: linear-gradient(
+                90deg,
+                #0005,
+                #ffffff60 30%,
+                transparent 55%,
+                #0005
+            );
+
+            box-shadow:
+                inset 0 0.5vmin 1vmin #fff5,
+                inset 0 -2vmin 3vmin #0004,
+                0.4vmin 0.5vmin 0.8vmin #0004;
+
+            transition: background-color 0.5s ease;
+        }
+
+        .tail:nth-child(odd) {
+            background-color: var(--red);
+        }
+
+        .tail:nth-child(even) {
+            background-color: var(--green);
+        }
+
+        .tail:nth-child(1) {
+            transform: translate(-50%, 0) rotate(0);
+        }
+
+        .tail:nth-child(2) {
+            transform: translate(-50%, 0) rotate(17deg);
+        }
+
+        .tail:nth-child(3) {
+            transform: translate(-50%, 0) rotate(34deg);
+        }
+
+        .tail:nth-child(4) {
+            transform: translate(-50%, 0) rotate(51deg);
+        }
+
+        .tail:nth-child(5) {
+            transform: translate(-50%, 0) rotate(68deg);
+        }
+
+        .tail:nth-child(6) {
+            transform: translate(-50%, 0) rotate(85deg);
+        }
+
+        .tail:nth-child(7) {
+            transform: translate(-50%, 0) rotate(102deg);
+        }
+
+        .tail:nth-child(8) {
+            transform: translate(-50%, 0) rotate(-17deg);
+        }
+
+        .tail:nth-child(9) {
+            transform: translate(-50%, 0) rotate(-34deg);
+        }
+
+        .tail:nth-child(10) {
+            transform: translate(-50%, 0) rotate(-51deg);
+        }
+
+        .tail:nth-child(11) {
+            transform: translate(-50%, 0) rotate(-68deg);
+        }
+
+        .tail:nth-child(12) {
+            transform: translate(-50%, 0) rotate(-85deg);
+        }
+
+        .tail:nth-child(13) {
+            transform: translate(-50%, 0) rotate(-102deg);
+        }
+
+        /* A midnight stage and a halo of gilded, illuminated plumes. */
+        body {
+            display: grid;
+            place-items: center;
+            isolation: isolate;
+            background: radial-gradient(ellipse at 50% 65%, #176061, #0c323b 44%, #061720 78%);
+        }
+        body::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle, #fff7dd 1px, transparent 2px) 13px 9px / 137px 113px,
+                radial-gradient(circle, #afdacf88 1px, transparent 2px) 20px 30px / 79px 93px;
+            animation: snowfall 18s linear infinite;
+        }
+        @keyframes snowfall { to { background-position: 13px 122px, 20px 123px; } }
+        .cartoon { width: 80vmin; height: 80vmin; font-size: .8vmin; }
+        .cartoon::before {
+            width: 80%; height: 7%; bottom: -1%;
+            background: radial-gradient(ellipse, #d7fff3, #81bdb59c 46%, transparent 72%);
+            box-shadow: none;
+        }
+        .cartoon .tail {
+            width: 13%; height: 57%; top: 11%;
+            border: .35em solid #f9c46b;
+            border-radius: 52% 52% 47% 47% / 17% 17% 83% 83%;
+            background:
+                radial-gradient(ellipse at 50% 15%, #fffce7 0 4%, #ffcc61 4.5% 6%, #8a441b 6.5% 8%, transparent 8.5%),
+                linear-gradient(90deg, transparent 47%, #ffda86 49%, #975020 51%, transparent 53%),
+                repeating-linear-gradient(145deg, transparent 0 1.6em, #fff5 1.65em 1.78em, transparent 1.83em 3em),
+                linear-gradient(90deg, #2d0f25, var(--plume) 43%, var(--plume) 60%, #261928);
+            box-shadow: inset 0 0 1.3em #ffdc8b77, 0 .4em 1em #04161b80;
+        }
+        .tail:nth-child(odd) { --plume: #d62c48; }
+        .tail:nth-child(even) { --plume: #139479; }
+        .tail::before {
+            content: "✦"; position: absolute; left: 50%; top: -1.1em;
+            transform: translateX(-50%); font: bold 3.5em/1 Georgia, serif;
+            color: #ffe3a0; text-shadow: 0 0 .45em #ffbd4b;
+            animation: gleam 3s ease-in-out infinite alternate;
+        }
+        .tail:nth-child(even)::before { animation-delay: -2s; }
+        @keyframes gleam { to { opacity: .65; } }
+        .body {
+            width: 42%; height: 42%;
+            border: .6em solid #632e28;
+            background:
+                radial-gradient(circle at 36% 20%, #db9c5d, transparent 43%),
+                linear-gradient(125deg, #b56b3d, #713826 73%, #452929);
+        }
+        .wing { width: 18%; height: 28%; top: 46%; left: 22%; }
+        .wing + .wing { left: auto; right: 40%; }
+        .wing { background: repeating-linear-gradient(127deg, transparent 0 2.3em, #5e302744 2.4em 2.8em), linear-gradient(130deg,#f1b36b,#97552f 65%,#542c28); }
+        .head { top: 22%; width: 23%; height: 22%; overflow: visible; clip-path: none; }
+        .head::before { height: 64%; }
+        .hat-top { top: 5%; }
+        .hat-bottom { top: 20%; width: 29%; transform: translateX(-50%) rotate(-7deg); }
+        .hat-top { transform: translateX(-50%) rotate(-15deg); }
+        .eye { width: 100%; height: 47%; left: 0; top: 35%; transform: rotate(-5deg); background: transparent; box-shadow: none; }
+        .eye::before, .eye::after {
+            content: ""; position: absolute; top: 0; left: -6%; width: 57%; height: 100%;
+            clip-path: polygon(50% 0,63% 25%,99% 19%,80% 52%,89% 92%,52% 78%,17% 100%,21% 62%,0 35%,35% 30%);
+            background: linear-gradient(136deg,#fff6ae 12%,#f4bd4e 26%,#73213a 27%,#ed4067 42%,#ffd3aa 43% 48%,#741645 49% 67%,#ffa43d 68%,#fff1a6);
+            box-shadow: none; border-radius: 0;
+        }
+        .eye::after { left: 49%; }
+        .eye { z-index: 2; }
+        .beak { top: 68%; left: 51%; }
+        .red { top: 70%; }
+        .scarf { top: 46%; width: 22%; height: 6%; }
+        .belt {
+            left: 33%; top: 70%; width: 34%; height: 4.4%;
+            background: #2a2228; border-radius: 30%; transform: rotate(3deg);
+        }
+        .belt::after {
+            content: ""; display: block; margin: auto; width: 16%; height: 90%;
+            border: .7em solid #ffd778; border-radius: .7em; box-sizing: border-box;
+        }
+        .medal {
+            top: 58%; left: 42%; width: 16%; text-align: center;
+            color: #ffebac; font: bold 8em/1 Georgia, serif; text-shadow: 0 .06em #844528;
+        }
+        .leg { height: 17%; top: 80%; }
+        @media (prefers-reduced-motion: reduce) {
+            body::before, .tail::before { animation: none; }
+        }
+        html { height: auto; overflow: auto; background: #061720; }
+        body { position: relative; display: block; height: auto; min-height: 100vh; overflow: clip; }
+        .spread {
+            max-width: 1520px; margin: auto; min-height: 100svh; display: grid;
+            grid-template-columns: minmax(16rem, .83fr) minmax(0, 1.5fr);
+            align-items: center; gap: 3vw; padding: 2rem 5vw; box-sizing: border-box;
+        }
+        .story { position: relative; z-index: 2; color: #fff4dc; max-width: 26rem; }
+        .story h1 { font: bold clamp(2.8rem, 5.2vw, 5.6rem)/.98 Georgia, serif; letter-spacing: -.055em; margin: 0; }
+        .story h1 em { display: block; color: #ffd390; }
+        .story p { font: 1.08rem/1.55 Georgia, serif; margin: 1em 0 0; }
+        .story p:first-of-type::before { content: ""; display: block; width: 3rem; height: 2px; background: #d6a45e; margin: 1.5rem 0; }
+        .clearing { position: relative; isolation: isolate; width: 100%; height: min(81vmin, 46rem); }
+        .cartoon { width: min(67vmin, 76%); height: auto; aspect-ratio: 1; left: 44%; top: 56%; font-size: min(.67vmin, .55vw); }
+        @media (max-width: 760px) {
+            .spread { grid-template-columns: 1fr; gap: 0; padding: 1rem 7vw 2rem; }
+            .clearing { grid-row: 1; height: min(82vw, 29rem); }
+            .cartoon { width: min(70vw, 23rem); font-size: min(.7vw, .23rem); }
+            .story { margin: auto; max-width: 35rem; width: 100%; }
+            .story h1 { font-size: clamp(2.4rem, 8vw, 3.8rem); }
+            .story h1 em { display: inline; }
+        }
+        /* Counter-rotate the performers so they face the audience as they circle. */
+        .clearing {
+            isolation: auto;
+            perspective: 950px;
+            perspective-origin: 50% 35%;
+            transform-style: preserve-3d;
+            container-type: inline-size;
+        }
+        .orbit {
+            position: absolute;
+            inset: 0;
+            --radius: 19cqw;
+            --start: 180deg;
+            animation: circle-clearing 8s linear infinite;
+        }
+        .tree-orbit { --radius: 13cqw; --start: 0deg; }
+        @keyframes circle-clearing {
+            from { transform: rotateX(-17deg) rotateY(var(--start)) translateX(var(--radius)) rotateY(calc(0deg - var(--start))) rotateX(17deg); }
+            to { transform: rotateX(-17deg) rotateY(calc(var(--start) + 360deg)) translateX(var(--radius)) rotateY(calc(-360deg - var(--start))) rotateX(17deg); }
+        }
+        .orbit .cartoon {
+            width: min(55cqw, 60vmin); font-size: min(.55cqw, .6vmin);
+            left: 50%; top: 56%;
+        }
+        .cartoon .leg { transform-origin: 50% 4%; }
+        @media (prefers-reduced-motion: reduce) {
+            .orbit { animation: none; transform: translateX(-16%); }
+            .tree-orbit { transform: translateX(20%); }
+        }
+        .tree-orbit, .tree-roll, .tree-model, .bough-tier { transform-style: preserve-3d; }
+        .tree-roll {
+            position: absolute; left: 50%; top: 55%;
+            font-size: min(30cqw, 32vmin); width: 1em; height: 1.62em;
+            margin: -.81em 0 0 -.5em;
+            animation: tree-cartwheel 12s ease-in-out infinite;
+        }
+        @keyframes tree-cartwheel {
+            0%, 20% { transform: rotateZ(-8deg); }
+            38% { transform: rotateZ(12deg); }
+            76%, 100% { transform: rotateZ(352deg); }
+        }
+        .tree-model { position: absolute; inset: 0; animation: turn-branches 10s linear infinite; }
+        @keyframes turn-branches {
+            from { transform: rotateX(-9deg) rotateY(10deg); }
+            to { transform: rotateX(-9deg) rotateY(370deg); }
+        }
+        .bough-tier { position: absolute; left: 50%; width: 1em; height: .82em; margin-left: -.5em; }
+        .lower-boughs { bottom: .13em; }
+        .middle-boughs { font-size: .77em; bottom: .64em; }
+        .upper-boughs { font-size: .54em; bottom: 1.58em; }
+        /* Eight sloping faces meet at the tip of each tier. */
+        .bough-face {
+            position: absolute; bottom: 0; left: 50%; width: .383em; height: .94em;
+            margin-left: -.1915em; transform-origin: center bottom;
+            transform: rotateY(var(--angle)) translateZ(.462em) rotateX(29.45deg);
+            clip-path: polygon(50% 0, 100% 97%, 82% 95%, 68% 100%, 48% 96%, 26% 100%, 0 97%);
+            background:
+                radial-gradient(circle at 34% 78%, #fff9c4 0 1.3%, #ffbd55 1.7% 3.3%, transparent 4%),
+                radial-gradient(circle at 62% 66%, #fff6d9 0 1%, #ef7362 2% 4%, #ac3039 4.4% 5%, transparent 5.5%),
+                linear-gradient(12deg, transparent 27%, #e6bd6b 27.5% 28.4%, transparent 29%),
+                linear-gradient(170deg, #85ca9d, var(--pine) 65%, #16473e);
+        }
+        .tree-base {
+            position: absolute; bottom: 0; left: 43%; width: 14%; height: 18%;
+            border-radius: 20%; background: linear-gradient(90deg,#563523,#a6764e,#624431);
+        }
+        .tree-star {
+            position: absolute; top: 3%; left: 50%; width: 1em; margin-left: -.5em;
+            color: #ffe498; font: bold .23em/1 Georgia, serif; text-align: center;
+            text-shadow: 0 0 .25em #ffbf53; transform: translateZ(.05em);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .tree-roll, .tree-model { animation: none; }
+            .tree-model { transform: rotateX(-9deg) rotateY(18deg); }
+        }
+        .spread {
+            --angel-size: clamp(55px, 7vw, 108px);
+            position: relative;
+            padding: var(--angel-size) max(6vw, var(--angel-size));
+        }
+        .angel-flight {
+            position: absolute; top: 0; left: 0; z-index: 3; pointer-events: none;
+            width: var(--angel-size); aspect-ratio: 140 / 108;
+            offset-path: inset(calc(var(--angel-size) * .52) round 12%);
+            offset-rotate: 0deg;
+            animation: pearls-rounds 24s linear infinite;
+        }
+        .angel-flight svg {
+            width: 100%; overflow: visible;
+            filter: drop-shadow(0 2px 5px #092b33) drop-shadow(0 0 4px #fae2a955);
+            animation: pearl-turn 24s linear infinite;
+        }
+        .pearl-near-wing, .pearl-far-wing {
+            transform-box: fill-box; transform-origin: 90% 90%;
+            animation: featherbeat .65s ease-in-out infinite alternate;
+        }
+        .pearl-far-wing { animation-delay: -.24s; }
+        @keyframes pearls-rounds { to { offset-distance: 100%; } }
+        @keyframes pearl-turn {
+            0%, 28%, 98%, 100% { transform: rotate(-5deg) scaleX(1); }
+            49%, 77% { transform: rotate(5deg) scaleX(-1); }
+        }
+        @keyframes featherbeat { to { transform: rotate(-12deg) scaleY(.54); } }
+        @media (max-width: 760px) {
+            .spread { padding-inline: max(12vw, 52px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .angel-flight, .angel-flight svg, .pearl-near-wing, .pearl-far-wing { animation: none; }
+            .angel-flight { offset-distance: 15%; }
+        }
+        html, body { height: 100%; overflow: hidden; }
+        .spread {
+            height: 100vh; height: 100dvh; min-height: 0;
+            grid-template-rows: minmax(0, 1fr);
+            grid-template-columns: minmax(0, .9fr) minmax(0, 1.4fr);
+            padding-block: clamp(12px, 5vh, 60px);
+        }
+        .clearing { height: min(100%, 78vmin, 46rem); }
+        .story { width: 100%; max-width: 30rem; }
+        .story h1 { font-size: clamp(2rem, min(4.6vw, 8vh), 5rem); }
+        .passages {
+            display: grid; border-top: 1px solid #cfa67188;
+            margin-top: clamp(8px, 2vh, 22px);
+            padding-top: clamp(8px, 1.8vh, 18px);
+        }
+        .passages p { grid-area: 1 / 1; margin: 0; font-size: clamp(1rem, 1.32vw, 1.2rem); line-height: 1.52; }
+        .story p:first-of-type::before { content: none; }
+        .off-page { visibility: hidden; }
+        .tale-nav { display: flex; align-items: center; gap: 14px; margin-top: 1rem; font: 600 .87rem/1.2 system-ui, sans-serif; }
+        .tale-nav button { padding: .65em 1em; border: 1px solid #e5c08c; border-radius: 2em; background: #ffe1a9; color: #18322f; font: inherit; cursor: pointer; }
+        .tale-nav button:disabled { opacity: .48; cursor: default; }
+        .tale-nav button:focus-visible { outline: 3px solid white; outline-offset: 2px; }
+        @media (max-width: 760px) and (orientation: portrait) {
+            .spread {
+                grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto;
+                padding: .6rem max(1.25rem, 8vw) max(1rem, 5dvh);
+            }
+            .clearing { align-self: end; height: min(100%, 72vw); }
+            .story h1 { font-size: clamp(1.8rem, 7vw, 2.7rem); }
+            .story p { font-size: 1rem; line-height: 1.42; }
+            .angel-flight { width: 13vw; max-width: 55px; z-index: 1; }
+        }
+        @media (orientation: landscape) and (max-height: 540px) {
+            .spread { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 2vw; padding: 9px 5vw; }
+            .clearing { grid-row: 1; grid-column: 2; }
+            .story h1 { font-size: clamp(1.5rem, 7vh, 2.3rem); }
+            .story h1 em { display: inline; }
+            .story p { font-size: .95rem; line-height: 1.32; }
+            .tale-nav { margin-top: .5rem; }
+        }
+        .holiday-backdrop {
+            position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+            background:
+                radial-gradient(ellipse at 78% 53%, #48d4a423, transparent 36%),
+                radial-gradient(ellipse at 94% 29%, #d4ab5a16, transparent 22%),
+                radial-gradient(ellipse at 14% 0, #db6c5a18, transparent 28%);
+        }
+        .festoon { display: block; width: 100%; height: 74px; }
+        @media (max-height: 540px), (max-width: 760px) {
+            .festoon { transform-origin: top; transform: scaleY(.72); }
+        }
+    </style>
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+    <div class="holiday-backdrop" aria-hidden="true">
+        <svg class="festoon" focusable="false">
+            <defs>
+                <radialGradient id="lamp-glow">
+                    <stop stop-color="white" stop-opacity=".8"/>
+                    <stop offset=".28" stop-color="white" stop-opacity=".26"/>
+                    <stop offset="1" stop-color="white" stop-opacity="0"/>
+                </radialGradient>
+                <mask id="lamp-halo" maskUnits="userSpaceOnUse" x="-20" y="-15" width="40" height="40">
+                    <circle cy="5" r="19" fill="url(#lamp-glow)"/>
+                </mask>
+                <g id="glass-lamp">
+                    <circle cy="5" r="19" fill="currentColor" mask="url(#lamp-halo)"/>
+                    <path d="M-3 0Q-7 10 0 14Q7 10 3 0Z" fill="currentColor"/>
+                    <path d="M-2 3L-2 7" stroke="#fff5d5" stroke-width="1.4" stroke-linecap="round"/>
+                    <rect x="-3.4" y="-4" width="6.8" height="5" rx="1.5" fill="#536353"/>
+                </g>
+                <pattern id="winter-strand" width="320" height="74" patternUnits="userSpaceOnUse">
+                    <path d="M-2 0Q160 84 322 0" fill="none" stroke="#071a1d" stroke-width="3"/>
+                    <path d="M-2 0Q160 84 322 0" fill="none" stroke="#668277" stroke-opacity=".6"/>
+                    <use href="#glass-lamp" transform="translate(20 13) rotate(16)" color="#ff7d76"/>
+                    <use href="#glass-lamp" transform="translate(60 29) rotate(8)" color="#ffc970"/>
+                    <use href="#glass-lamp" transform="translate(100 39) rotate(9)" color="#68e3b5"/>
+                    <use href="#glass-lamp" transform="translate(140 45)" color="#ffe8b0"/>
+                    <use href="#glass-lamp" transform="translate(180 45) rotate(-7)" color="#ff7d76"/>
+                    <use href="#glass-lamp" transform="translate(220 39) rotate(-10)" color="#83cfff"/>
+                    <use href="#glass-lamp" transform="translate(260 29) rotate(-8)" color="#ffc970"/>
+                    <use href="#glass-lamp" transform="translate(300 13) rotate(-16)" color="#68e3b5"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#winter-strand)"/>
+        </svg>
+    </div>
+    <main class="spread">
+        <div class="angel-flight" role="img" aria-label="Pearl, Figgy’s guardian angel turkey, flies laps around the story and the Christmas tree.">
+            <svg viewBox="0 0 140 108" aria-hidden="true" focusable="false">
+                <defs>
+                    <linearGradient id="pearl-wing" x2=".3" y2="1"><stop stop-color="#fffdf1"/><stop offset=".65" stop-color="#d6efe7"/><stop offset="1" stop-color="#7ebbb2"/></linearGradient>
+                    <linearGradient id="pearl-body" x2=".8" y2="1"><stop stop-color="#e3af75"/><stop offset=".65" stop-color="#a36a47"/><stop offset="1" stop-color="#734638"/></linearGradient>
+                    <path id="pearl-plume" d="M44 79Q16 67 16 46Q16 39 22 40Q36 41 44 79Z" stroke="#ebbf83" stroke-width="2"/>
+                </defs>
+                <g fill="#976752"><use href="#pearl-plume" transform="rotate(-33 44 79)"/><use href="#pearl-plume" transform="rotate(-12 44 79)"/><use href="#pearl-plume" transform="rotate(11 44 79)"/><use href="#pearl-plume" transform="rotate(33 44 79)"/></g>
+                <g fill="url(#pearl-wing)" stroke="#8db9ac" stroke-width="1.5" stroke-linejoin="round">
+                    <path class="pearl-far-wing" d="M68 69Q68 44 90 21Q93 34 88 45L96 36Q98 54 82 66Z"/>
+                </g>
+                <path d="M43 76Q37 57 56 55Q68 53 77 59Q85 57 85 44Q84 29 98 28Q113 26 114 40Q115 51 102 56Q101 80 84 88Q58 99 43 76Z" fill="url(#pearl-body)" stroke="#704738" stroke-width="2"/>
+                <path class="pearl-near-wing" d="M72 72Q57 77 47 65Q32 51 28 27Q37 30 49 42Q39 23 39 14Q50 19 62 35L57 18Q74 28 79 49Q83 62 72 72Z" fill="url(#pearl-wing)" stroke="#8db9ac" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M111 40L128 44L112 48Z" fill="#ffd366"/><path d="M111 45Q120 57 111 61Q104 59 111 45Z" fill="#dc5557"/>
+                <circle cx="106" cy="38" r="2.8" fill="#332626"/><circle cx="107" cy="37" r=".9" fill="white"/>
+                <ellipse cx="100" cy="20" rx="19" ry="5" transform="rotate(-9 100 20)" fill="none" stroke="#ffe599" stroke-width="3.4"/>
+            </svg>
+        </div>
+        <article class="story" aria-labelledby="tale-title">
+            <h1 id="tale-title">Figgy Saves <em>His Own Skin</em></h1>
+            <div class="passages" id="passages" aria-live="polite" aria-atomic="true">
+                <p>On Thanksgiving morning, Figgy went to Walmart to buy Chick-fil-A chicken nuggets. A Walmart employee caught him by the freezer, weighed him on the produce scale, and stuck a sale sticker on his tail. “I’m here for chicken,” Figgy said. “So are most people till they see the price,” she said.</p>
+                <p class="off-page">Pearl, his guardian angel, circled the price gun. “Try Christmas,” she whispered. Figgy lit up his feathers. “Hear me out. You sell them a tree. Then you tell them it comes without the lights.” The employee peeled off his sticker. “Can you do that feather thing in the window?”</p>
+                <p class="off-page">That’s how Walmart ended up celebrating Christmas for Thanksgiving. At noon, the manager asked everyone to name one thing they were thankful for. A cashier got as far as “My mom” before the loudspeaker cut in with “Jingle Bells.”</p>
+                <p class="off-page">Figgy made his way to electronics. “I’m buying myself GTA 6 for Christmas,” he told Pearl. “And since somebody asked, I’m thankful for GTA 6.” She glanced into his empty basket. “What about the nuggets?” Figgy looked back at the employee holding the price gun. “Drive-thru.”</p>
+            </div>
+            <nav class="tale-nav" aria-label="Story pages">
+                <button type="button" id="previous-page" aria-controls="passages" disabled>← Back</button>
+                <span id="page-count">1 / 4</span>
+                <button type="button" id="next-page" aria-controls="passages">Next →</button>
+            </nav>
+        </article>
+        <div class="clearing">
+            <div class="orbit tree-orbit">
+            <div class="tree-roll" aria-hidden="true">
+                <div class="tree-model">
+                    <div class="tree-base"></div>
+                    <div class="bough-tier lower-boughs">
+                        <i class="bough-face" style="--angle: 0deg; --pine: #267c5b"></i>
+                        <i class="bough-face" style="--angle: 45deg; --pine: #216a54"></i>
+                        <i class="bough-face" style="--angle: 90deg; --pine: #318564"></i>
+                        <i class="bough-face" style="--angle: 135deg; --pine: #28795d"></i>
+                        <i class="bough-face" style="--angle: 180deg; --pine: #206651"></i>
+                        <i class="bough-face" style="--angle: 225deg; --pine: #307a59"></i>
+                        <i class="bough-face" style="--angle: 270deg; --pine: #358463"></i>
+                        <i class="bough-face" style="--angle: 315deg; --pine: #236e57"></i>
+                    </div>
+                    <div class="bough-tier middle-boughs">
+                        <i class="bough-face" style="--angle: 0deg; --pine: #267c5b"></i>
+                        <i class="bough-face" style="--angle: 45deg; --pine: #216a54"></i>
+                        <i class="bough-face" style="--angle: 90deg; --pine: #318564"></i>
+                        <i class="bough-face" style="--angle: 135deg; --pine: #28795d"></i>
+                        <i class="bough-face" style="--angle: 180deg; --pine: #206651"></i>
+                        <i class="bough-face" style="--angle: 225deg; --pine: #307a59"></i>
+                        <i class="bough-face" style="--angle: 270deg; --pine: #358463"></i>
+                        <i class="bough-face" style="--angle: 315deg; --pine: #236e57"></i>
+                    </div>
+                    <div class="bough-tier upper-boughs">
+                        <i class="bough-face" style="--angle: 0deg; --pine: #267c5b"></i>
+                        <i class="bough-face" style="--angle: 45deg; --pine: #216a54"></i>
+                        <i class="bough-face" style="--angle: 90deg; --pine: #318564"></i>
+                        <i class="bough-face" style="--angle: 135deg; --pine: #28795d"></i>
+                        <i class="bough-face" style="--angle: 180deg; --pine: #206651"></i>
+                        <i class="bough-face" style="--angle: 225deg; --pine: #307a59"></i>
+                        <i class="bough-face" style="--angle: 270deg; --pine: #358463"></i>
+                        <i class="bough-face" style="--angle: 315deg; --pine: #236e57"></i>
+                    </div>
+                    <span class="tree-star">★</span>
+                </div>
+            </div>
+            </div>
+            <div class="orbit bird-orbit">
+    <div class="cartoon" role="img" aria-label="A Christmas turkey struts through falling snow in star-shaped sunglasses, a Santa hat and a striped scarf. It kicks and hops around a glowing Christmas tree that circles with it.">
+
+        <div class="tail"></div>
+        <div class="tail"></div>
+        <div class="tail"></div>
+        <div class="tail"></div>
+        <div class="tail"></div>
+        <div class="tail"></div>
+        <div class="tail"></div>
+        <div class="tail"></div>
+        <div class="tail"></div>
+        <div class="tail"></div>
+        <div class="tail"></div>
+        <div class="tail"></div>
+        <div class="tail"></div>
+
+        <div class="leg"></div>
+        <div class="leg"></div>
+
+        <div class="body"></div>
+
+        <div class="wing"></div>
+        <div class="wing"></div>
+
+        <div class="hat-top"></div>
+        <div class="hat-bottom"></div>
+
+        <div class="head">
+            <div class="eye"></div>
+            <div class="beak"></div>
+            <div class="red"></div>
+        </div>
+
+        <div class="belt"></div><div class="medal" aria-hidden="true">❄</div><div class="scarf"></div>
+
+    </div>
+
+
+
+        </div>
+        </div>
+    </main>
+</body>
+</html>
